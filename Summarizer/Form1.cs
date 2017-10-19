@@ -26,7 +26,8 @@ namespace Summarizer
                 string strText = null;
                 rtxtInput.Text = strText;
                 lstSentence = SeparateSentences(strText);
-                lstSentence = DetermineLengthSentences(lstSentence);
+                lstSentence = DetermineLengthFillDictionary(lstSentence);
+                lstSentence = DetermineScore(lstSentence);
             }
         }
 
@@ -57,6 +58,13 @@ namespace Summarizer
                     newSentences[i].intAmountWords = strDictionary.Length;
                 }
             }
+
+            return newSentences;
+        }
+
+        public List<Sentence> DetermineScore(List<Sentence> sentences)
+        {
+            List<Sentence> newSentences = new List<Sentence>(sentences);
 
             return newSentences;
         }
