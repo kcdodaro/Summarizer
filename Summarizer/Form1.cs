@@ -110,12 +110,12 @@ namespace Summarizer
                 }
             }
 
-            //for numbers + 4
+            //for numbers + 10
             for (int i = 0; i < dictionary.Count(); i++)
             {
                 if (dictionary[i].strWord.Any(char.IsDigit))
                 {
-                    newSentences[dictionary[i].intID].intScore += 4;
+                    newSentences[dictionary[i].intID].intScore += 10;
                 }
             }
 
@@ -175,7 +175,7 @@ namespace Summarizer
         #region Sentence ranking
         public List<Sentence> RankSentences(List<Sentence> sentences)
         {
-            List<Sentence> rankedSentences = sentences.OrderBy(score => score.intScore).ToList();
+            List<Sentence> rankedSentences = sentences.OrderByDescending(score => score.intScore).ToList();
             return rankedSentences;
         }
 
