@@ -65,6 +65,60 @@ namespace Summarizer
         public List<Sentence> DetermineScore(List<Sentence> sentences)
         {
             List<Sentence> newSentences = new List<Sentence>(sentences);
+            List<Word> dictionary = new List<Word>();
+
+            for(int i = 0; i < newSentences.Count(); i++)
+            {
+                for (int j = 0; j < newSentences[i].strDictionary.Length; j++)
+                {
+                    Word word = new Word(newSentences[i].intID, newSentences[i].strDictionary[j]);
+                    dictionary.Add(word);
+                }
+            }
+
+            //for quotes + 2
+            for (int i = 0; i < dictionary.Count(); i++)
+            {
+                if (dictionary[i].strWord.Contains("\""))
+                {
+                    newSentences[dictionary[i].intID].intScore += 2;
+                }
+            }
+
+            //for numbers + 4
+            for (int i = 0; i < dictionary.Count(); i++)
+            {
+                if (dictionary[i].strWord.Any(char.IsDigit))
+                {
+                    newSentences[dictionary[i].intID].intScore += 4;
+                }
+            }
+
+            //for common non repeated words
+            string[] strCommonWords = new string[] { "the", "be", "to", "of", "and", "a", "in", "that", "have", "I", "it", "for", "not", "on", "with", "he", "as", "you", "do", "at", "this", "but", "his", "by", "from", "they", "we", "say", "her", "she", "or", "an", "will", "my", "one", "all", "would", "there", "their", "what", "so", "up", "out", "if", "about", "who", "get", "which", "go", "me", "when", "make", "can", "like", "time", "no", "just", "him", "know", "take", "people", "into", "year", "your", "good", "some", "could", "them", "see", "other", "than", "then", "now", "look", "only", "come", "its", "over", "think", "also", "back", "after", "use", "two", "how", "our", "work", "first", "well", "way", "even", "new", "want", "because", "any", "these", "give", "day", "most", "us"};
+            List<string> lstCommonWords = new List<string>(strCommonWords);
+            List<DictionaryWord> lstDictWord = new List<DictionaryWord>();
+
+            for (int i = 0; i < dictionary.Count(); i++)
+            {
+                if (!lstCommonWords.Contains(dictionary[i].strWord))
+                {
+                    List<int> wordids = new List<int>(dictionary[i].intID);
+                    DictionaryWord newDictWord = new DictionaryWord(wordids, dictionary[i].strWord, 1);
+                    lstDictWord.Add(newDictWord);
+                }
+                else
+                {
+                    for (int j = 0; j < lstDictWord.Count(); j++)
+                    {
+                        if (lstDictWord[j].strWord == dictionary[i].strWord)
+                        {
+                            lstDictWord[j].intCount++;
+                            lstDictWord[j].lstIntSentencesContaining.Add(dictionary[i].intID);
+                        }
+                    }
+                }
+            }
 
             return newSentences;
         }
