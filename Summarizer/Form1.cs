@@ -24,7 +24,7 @@ namespace Summarizer
             if (rtxtInput.Text != null)
             {
                 string strText = null;
-                rtxtInput.Text = strText;
+                strText = rtxtInput.Text;
                 lstSentence = SeparateSentences(strText);
                 lstSentence = DetermineLengthFillDictionary(lstSentence);
                 lstSentence = DetermineScore(lstSentence);
@@ -55,6 +55,7 @@ namespace Summarizer
                 for (int j = 0; j < newSentences[i].strSentence.Length; j++)
                 {
                     string[] strDictionary = newSentences[i].strSentence.Split(' ');
+                    newSentences[i].strDictionary = strDictionary;
                     newSentences[i].intAmountWords = strDictionary.Length;
                 }
             }
@@ -99,6 +100,7 @@ namespace Summarizer
             List<string> lstCommonWords = new List<string>(strCommonWords);
             List<DictionaryWord> lstDictWord = new List<DictionaryWord>();
 
+            //adds all common unique words to a single list
             for (int i = 0; i < dictionary.Count(); i++)
             {
                 if (!lstCommonWords.Contains(dictionary[i].strWord))
@@ -117,6 +119,28 @@ namespace Summarizer
                             lstDictWord[j].lstIntSentencesContaining.Add(dictionary[i].intID);
                         }
                     }
+                }
+            }
+
+            //removes all common english words from the list
+            for (int i = 0; i < lstDictWord.Count(); i++)
+            {
+                for (int j = 0; j < lstCommonWords.Count(); j++)
+                {
+                    if (lstDictWord[i].strWord == lstCommonWords[j])
+                    {
+                        lstDictWord.RemoveAt(i);
+                    }
+                }
+            }
+
+            //adds score to the sentences
+            for (int i = 0; i < lstDictWord.Count(); i++)
+            {
+                for (int j = 0; j < lstDictWord[i].lstIntSentencesContaining.Count; j++)
+                {
+                    int intPlace = lstDictWord[i].lstIntSentencesContaining[j];
+                    newSentences[dictionary[intPlace].intID].intScore += lstDictWord[i].intCount;
                 }
             }
 
