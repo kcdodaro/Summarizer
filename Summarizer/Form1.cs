@@ -31,18 +31,18 @@ namespace Summarizer
                 lstSentence = DetermineScore(lstSentence);
 
                 //sentence rank
-                int intCutdown = 0;
+                double dblCutdown = 0;
                 try
                 {
-                    intCutdown = int.Parse(txtNumInput.Text);
+                    dblCutdown = double.Parse(txtNumInput.Text);
 
-                    if (intCutdown > lstSentence.Count())
+                    if (dblCutdown > lstSentence.Count())
                     {
-                        intCutdown = lstSentence.Count();
+                        dblCutdown = lstSentence.Count();
                     }
 
                     lstSentence = RankSentences(lstSentence);
-                    lstSentence = CutSentences(lstSentence, intCutdown);
+                    lstSentence = CutSentences(lstSentence, dblCutdown);
                 }
                 catch
                 {
@@ -179,7 +179,7 @@ namespace Summarizer
             return rankedSentences;
         }
 
-        public List<Sentence> CutSentences(List<Sentence> sentences, int intPercentOrValue)
+        public List<Sentence> CutSentences(List<Sentence> sentences, double dblPercentOrValue)
         {
             List<Sentence> cutSentences = new List<Sentence>();
 
@@ -187,16 +187,16 @@ namespace Summarizer
 
             if (radPercentage.Checked)
             {
-                int intPercentage = intAmount * intPercentOrValue;
-                for (int i = 0; i < intAmount; i++)
+                double dblPercentage = intAmount * dblPercentOrValue;
+                for (int i = 0; i < dblPercentage; i++)
                 {
                     cutSentences.Add(sentences[i]);
                 }
             }
             else
             {
-                int intSentences = intAmount;
-                for (int i = 0; i < intAmount; i++)
+                double dblSentences = dblPercentOrValue;
+                for (int i = 0; i < dblSentences; i++)
                 {
                     cutSentences.Add(sentences[i]);
                 }
@@ -214,7 +214,7 @@ namespace Summarizer
             string text = null;
             for (int i = 0; i < sentences.Count; i++)
             {
-                text += sentences[i].strSentence;
+                text += sentences[i].strSentence + " \n";
             }
 
             rtxtOutput.Text = text;
