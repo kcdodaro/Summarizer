@@ -23,14 +23,38 @@ namespace Summarizer
             List<Sentence> lstSentence = new List<Sentence>();
             if (rtxtInput.Text != null)
             {
+                //sentence formatting and stuff
                 string strText = null;
                 strText = rtxtInput.Text;
                 lstSentence = SeparateSentences(strText);
                 lstSentence = DetermineLengthFillDictionary(lstSentence);
                 lstSentence = DetermineScore(lstSentence);
+
+                //sentence rank
+                int intCutdown = 0;
+                try
+                {
+                    intCutdown = int.Parse(txtNumInput.Text);
+
+                    if (intCutdown > lstSentence.Count())
+                    {
+                        intCutdown = lstSentence.Count();
+                    }
+
+                    lstSentence = RankSentences(lstSentence);
+                    lstSentence = CutSentences(lstSentence, intCutdown);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid percentage or sentence input");
+                }
+
+                //output
+                OutputSentences(lstSentence);
             }
         }
 
+        #region Sentence formatting and stuff
         public List<Sentence> SeparateSentences(string text)
         {
             List<Sentence> sentences = new List<Sentence>();
@@ -146,5 +170,55 @@ namespace Summarizer
 
             return newSentences;
         }
+        #endregion
+
+        #region Sentence ranking
+        public List<Sentence> RankSentences(List<Sentence> sentences)
+        {
+            List<Sentence> rankedSentences = sentences.OrderBy(score => score.intScore).ToList();
+            return rankedSentences;
+        }
+
+        public List<Sentence> CutSentences(List<Sentence> sentences, int intPercentOrValue)
+        {
+            List<Sentence> cutSentences = new List<Sentence>();
+
+            int intAmount = sentences.Count();
+
+            if (radPercentage.Checked)
+            {
+                int intPercentage = intAmount * intPercentOrValue;
+                for (int i = 0; i < intAmount; i++)
+                {
+                    cutSentences.Add(sentences[i]);
+                }
+            }
+            else
+            {
+                int intSentences = intAmount;
+                for (int i = 0; i < intAmount; i++)
+                {
+                    cutSentences.Add(sentences[i]);
+                }
+            }
+
+            List<Sentence> rankedSentences = cutSentences.OrderBy(id => id.intID).ToList();
+
+            return rankedSentences;
+        }
+        #endregion
+
+        #region Output
+        public void OutputSentences(List<Sentence> sentences)
+        {
+            string text = null;
+            for (int i = 0; i < sentences.Count; i++)
+            {
+                text += sentences[i].strSentence;
+            }
+
+            rtxtOutput.Text = text;
+        }
+        #endregion
     }
 }

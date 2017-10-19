@@ -33,8 +33,9 @@
             this.radSentences = new System.Windows.Forms.RadioButton();
             this.radPercentage = new System.Windows.Forms.RadioButton();
             this.rtxtInput = new System.Windows.Forms.RichTextBox();
-            this.lstOutput = new System.Windows.Forms.ListBox();
             this.btnSummarize = new System.Windows.Forms.Button();
+            this.txtNumInput = new System.Windows.Forms.TextBox();
+            this.rtxtOutput = new System.Windows.Forms.RichTextBox();
             this.grpSentOrPerc.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,17 +89,9 @@
             this.rtxtInput.TabIndex = 2;
             this.rtxtInput.Text = "";
             // 
-            // lstOutput
-            // 
-            this.lstOutput.FormattingEnabled = true;
-            this.lstOutput.Location = new System.Drawing.Point(12, 345);
-            this.lstOutput.Name = "lstOutput";
-            this.lstOutput.Size = new System.Drawing.Size(433, 186);
-            this.lstOutput.TabIndex = 3;
-            // 
             // btnSummarize
             // 
-            this.btnSummarize.Location = new System.Drawing.Point(454, 100);
+            this.btnSummarize.Location = new System.Drawing.Point(454, 128);
             this.btnSummarize.Name = "btnSummarize";
             this.btnSummarize.Size = new System.Drawing.Size(110, 23);
             this.btnSummarize.TabIndex = 4;
@@ -106,13 +99,30 @@
             this.btnSummarize.UseVisualStyleBackColor = true;
             this.btnSummarize.Click += new System.EventHandler(this.btnSummarize_Click);
             // 
+            // txtNumInput
+            // 
+            this.txtNumInput.Location = new System.Drawing.Point(454, 100);
+            this.txtNumInput.Name = "txtNumInput";
+            this.txtNumInput.Size = new System.Drawing.Size(110, 20);
+            this.txtNumInput.TabIndex = 5;
+            // 
+            // rtxtOutput
+            // 
+            this.rtxtOutput.Location = new System.Drawing.Point(13, 346);
+            this.rtxtOutput.Name = "rtxtOutput";
+            this.rtxtOutput.ReadOnly = true;
+            this.rtxtOutput.Size = new System.Drawing.Size(432, 184);
+            this.rtxtOutput.TabIndex = 6;
+            this.rtxtOutput.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(576, 542);
+            this.Controls.Add(this.rtxtOutput);
+            this.Controls.Add(this.txtNumInput);
             this.Controls.Add(this.btnSummarize);
-            this.Controls.Add(this.lstOutput);
             this.Controls.Add(this.rtxtInput);
             this.Controls.Add(this.grpSentOrPerc);
             this.Controls.Add(this.lblAmountSentences);
@@ -132,8 +142,9 @@
         private System.Windows.Forms.RadioButton radPercentage;
         private System.Windows.Forms.RadioButton radSentences;
         private System.Windows.Forms.RichTextBox rtxtInput;
-        private System.Windows.Forms.ListBox lstOutput;
         private System.Windows.Forms.Button btnSummarize;
+        private System.Windows.Forms.TextBox txtNumInput;
+        private System.Windows.Forms.RichTextBox rtxtOutput;
     }
 }
 
