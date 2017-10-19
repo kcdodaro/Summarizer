@@ -34,17 +34,18 @@ namespace Summarizer
         {
             List<Sentence> sentences = new List<Sentence>();
             string[] strSentences = Regex.Split(text, @"(?<=[\.!\?])\s+");
+            string[] strDictionary = null;
 
             for (int i = 0; i < strSentences.Length; i++)
             {
-                Sentence newSentence = new Sentence(i, 0, 0, strSentences[i]);
+                Sentence newSentence = new Sentence(i, 0, 0, strSentences[i], strDictionary);
                 sentences.Add(newSentence);
             }
 
             return sentences;
         }
 
-        public List<Sentence> DetermineLengthSentences(List<Sentence> sentences)
+        public List<Sentence> DetermineLengthFillDictionary(List<Sentence> sentences)
         {
             List<Sentence> newSentences = new List<Sentence>(sentences);
 
@@ -52,7 +53,8 @@ namespace Summarizer
             {
                 for (int j = 0; j < newSentences[i].strSentence.Length; j++)
                 {
-                    int intAmountWords = 0;
+                    string[] strDictionary = newSentences[i].strSentence.Split(' ');
+                    newSentences[i].intAmountWords = strDictionary.Length;
                 }
             }
 
