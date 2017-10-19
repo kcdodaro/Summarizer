@@ -104,6 +104,7 @@
             this.btnSummarize.TabIndex = 4;
             this.btnSummarize.Text = "Summarize";
             this.btnSummarize.UseVisualStyleBackColor = true;
+            this.btnSummarize.Click += new System.EventHandler(this.btnSummarize_Click);
             // 
             // Form1
             // 
