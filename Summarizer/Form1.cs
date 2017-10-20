@@ -25,7 +25,7 @@ namespace Summarizer
             {
                 //sentence formatting and stuff
                 string strText = null;
-                strText = rtxtInput.Text;
+                strText = rtxtInput.Text.Trim();
                 lstSentence = SeparateSentences(strText);
                 lstSentence = DetermineLengthFillDictionary(lstSentence);
                 lstSentence = DetermineScore(lstSentence);
